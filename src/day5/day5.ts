@@ -1,10 +1,10 @@
 import fs = require("fs");
-var input = fs.readFileSync("input5.txt", "utf8").replace(/\r/g, '')
-var boardingPasses = input.split("\n")
+const input = fs.readFileSync("input5.txt", "utf8").replace(/\r/g, '')
+const boardingPasses = input.split("\n")
 
-var highestId = 0;
+let highestId = 0;
 
-var IDs: Array<number> = []
+let IDs: Array<number> = []
 
 for(var i = 0; i < boardingPasses.length; i++){
     let id = getId(boardingPasses[i])
@@ -15,7 +15,7 @@ for(var i = 0; i < boardingPasses.length; i++){
 }
 console.log("part1 ", highestId)
 
-IDs.sort(function(a, b) {
+IDs.sort((a, b) => {
     return a - b;
   });
 
@@ -25,15 +25,10 @@ for(var i = 0; i < IDs.length; i++){
     }
 }
 
-
 function getId(boardingPass: string){
-    let binaryRow = boardingPass.slice(0,7).replace(/F/g, '0')
-    binaryRow = binaryRow.replace(/B/g, '1')
-    var row = parseInt(binaryRow, 2)
-
-    var binaryColumn = boardingPass.slice(7,10).replace(/L/g, '0')
-    binaryColumn = binaryColumn.replace(/R/g, '1')
-    var column = parseInt(binaryColumn, 2)
+    const binary = boardingPass.replace(/F|L/g, '0').replace(/B|R/g, '1')
+    const row = parseInt(binary.slice(0,7), 2)
+    const column = parseInt(binary.slice(7,10), 2)
 
     return (row*8) + column
 }
